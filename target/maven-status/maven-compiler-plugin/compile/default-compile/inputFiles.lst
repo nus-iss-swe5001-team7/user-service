@@ -1,0 +1,6 @@
+/mnt/c/Projects/platformPracticeModule/groupFoodOrderPlatform/user-service/src/main/java/com/nus/edu/se/user_service/UserServiceApplication.java
+/mnt/c/Projects/platformPracticeModule/groupFoodOrderPlatform/user-service/src/main/java/com/nus/edu/se/user_service/boundary/UserController.java
+/mnt/c/Projects/platformPracticeModule/groupFoodOrderPlatform/user-service/src/main/java/com/nus/edu/se/user_service/dao/UserRepository.java
+/mnt/c/Projects/platformPracticeModule/groupFoodOrderPlatform/user-service/src/main/java/com/nus/edu/se/user_service/dto/UserRequest.java
+/mnt/c/Projects/platformPracticeModule/groupFoodOrderPlatform/user-service/src/main/java/com/nus/edu/se/user_service/model/Users.java
+/mnt/c/Projects/platformPracticeModule/groupFoodOrderPlatform/user-service/src/main/java/com/nus/edu/se/user_service/service/UserService.java
