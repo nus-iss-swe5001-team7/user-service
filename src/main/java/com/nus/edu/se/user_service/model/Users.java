@@ -1,24 +1,35 @@
 package com.nus.edu.se.user_service.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
 
 @Data
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    @UuidGenerator
+    @Column(name = "user_id", nullable = false)
+    private UUID id;
 
-    private String userName;
+    @Column(name = "user_name", nullable = false)
+    private String name;
 
-    private String userRole;
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "user_role", nullable = false)
+    private String role;
 
 }

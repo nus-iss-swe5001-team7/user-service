@@ -1,8 +1,6 @@
 package com.nus.edu.se.user_service.dto;
 
-public record UserRequest(
+public record UserResponse(
         String name,
-        String password,
-        String email,
         String role) {
 }
