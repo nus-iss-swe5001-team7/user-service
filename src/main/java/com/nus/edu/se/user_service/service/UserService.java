@@ -12,9 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
-
 @Service
 @Slf4j
 public class UserService {
@@ -47,21 +44,6 @@ public class UserService {
             log.error(e.getMessage());
             throw new ConflictException("User or email already exists");
         }
-    }
-
-    public ResponseEntity<Users> getUserById(UUID id) {
-        try {
-            Optional<Users> userOptional = userRepository.findById(id);
-
-            if (userOptional.isPresent()) {
-                return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(new Users(), HttpStatus.BAD_REQUEST);
     }
 
 }

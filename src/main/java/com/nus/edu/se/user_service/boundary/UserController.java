@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @Slf4j
 @RestController
 @RequestMapping("user")
@@ -61,8 +59,4 @@ public class UserController {
         return value == null || value.trim().isEmpty();
     }
 
-    @GetMapping("getUserById/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable UUID id) {
-        return userService.getUserById(id);
-    }
 }
