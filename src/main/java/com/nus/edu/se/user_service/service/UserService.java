@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,6 +26,11 @@ public class UserService {
     @Autowired
     private UsersMapper usersMapper;
 
+    @Autowired
+    JwtTokenInterface jwtTokenInterface;
+
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
     public ResponseEntity<Users> getUserByName(String userName) {
         try {
             return new ResponseEntity<>(userRepository.findByName(userName), HttpStatus.OK);
@@ -36,13 +42,16 @@ public class UserService {
 
     public ResponseEntity<UserResponse> registerUser(UserRequest userRequest) {
         try {
+            String encodedPassword = encoder.encode(userRequest.password());
             Users user = Users.builder()
                     .name(userRequest.name())
-                    .password(userRequest.password())
+                    .password(encodedPassword)
                     .email(userRequest.email())
                     .role(userRequest.role()).build();
             userRepository.save(user);
-            return new ResponseEntity<>(usersMapper.formUserResponse(user), HttpStatus.OK);
+            // Generate JWT token after successful register
+            String token = jwtTokenInterface.generateToken(user.getName()).getBody();
+            return new ResponseEntity<>(usersMapper.formUserResponse(user, token), HttpStatus.OK);
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new ConflictException("User or email already exists");
