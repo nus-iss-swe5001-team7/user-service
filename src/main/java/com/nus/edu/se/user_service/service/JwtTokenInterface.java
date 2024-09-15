@@ -8,5 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient("API-GATEWAY")
 public interface JwtTokenInterface {
     @PostMapping("jwt/generateToken")
-    public ResponseEntity<String> generateToken(@RequestBody String userName);
+    ResponseEntity<String> generateToken(@RequestBody String userName);
+
+    @PostMapping("jwt/blacklistToken")
+    ResponseEntity<String> blacklistToken(@RequestBody String token);
 }

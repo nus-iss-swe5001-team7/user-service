@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 public class UsersMapper {
 
     public UserResponse formUserResponse(Users usersModel, String token) {
-        return new UserResponse(usersModel.getId().toString(), usersModel.getName(), usersModel.getRole(), token);
+        return new UserResponse(usersModel.getUserId().toString(), usersModel.getName(), usersModel.getRole(), token);
     }
 }
