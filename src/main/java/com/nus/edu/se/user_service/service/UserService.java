@@ -80,7 +80,7 @@ public class UserService {
 
     public ResponseEntity<Users> getUserById(UUID id) {
         try {
-            Optional<Users> userOptional = userRepository.findById(id);
+            Optional<Users> userOptional = Optional.ofNullable(userRepository.findByUserId(id));
 
             if (userOptional.isPresent()) {
                 return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
