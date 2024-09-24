@@ -13,12 +13,13 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "users")
 public class Users {
 
     @Id
-    @UuidGenerator
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id", nullable = false)
-    private UUID id;
+    private UUID userId;
 
     @Column(name = "user_name", nullable = false)
     private String name;
