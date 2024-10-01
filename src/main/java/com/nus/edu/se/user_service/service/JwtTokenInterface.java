@@ -12,4 +12,7 @@ public interface JwtTokenInterface {
 
     @PostMapping("jwt/blacklistToken")
     ResponseEntity<String> blacklistToken(@RequestBody String token);
+
+    @PostMapping("jwt/validateToken")
+    ResponseEntity<Boolean> validateToken(@RequestBody String token);
 }

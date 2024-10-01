@@ -35,6 +35,7 @@ public class AuthenticateService {
             if (encoder.matches(userRequest.password(), user.getPassword())) {
                 // Generate JWT token after successful login
                 String token = jwtTokenInterface.generateToken(user.getName()).getBody();
+                System.out.println("authenticate token:"+token);
                 return new ResponseEntity<>(usersMapper.formUserResponse(user, token), HttpStatus.OK);
             } else {
                 throw new AuthenticationException("Invalid email or password.");
