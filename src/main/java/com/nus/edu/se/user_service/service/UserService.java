@@ -78,7 +78,15 @@ public class UserService {
         return new ResponseEntity<>("No Token existed", HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<Users> getUserById(UUID id) {
+    public ResponseEntity<Users> getUserById(UUID id, String token) throws org.apache.tomcat.websocket.AuthenticationException {
+        if (Boolean.TRUE.equals(jwtTokenInterface.validateToken(token).getBody())) {
+            return retrieveUserById(id);
+        } else {
+            throw new org.apache.tomcat.websocket.AuthenticationException("User is not authenticated to getRestaurantById!");
+        }
+    }
+
+    public ResponseEntity<Users> retrieveUserById(UUID id) {
         try {
             Optional<Users> userOptional = Optional.ofNullable(userRepository.findByUserId(id));
 

@@ -7,6 +7,7 @@ import com.nus.edu.se.user_service.service.AuthenticateService;
 import com.nus.edu.se.user_service.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +52,9 @@ public class UserController {
     }
 
     @GetMapping("getUserById/{id}")
-    public ResponseEntity<Users> getUserById(@PathVariable UUID id) {
-        return userService.getUserById(id);
+    public ResponseEntity<Users> getUserById(@PathVariable UUID id, HttpServletRequest request) throws AuthenticationException {
+        String token = userService.resolveToken(request).getBody();
+        return userService.getUserById(id, token);
     }
 
 }
