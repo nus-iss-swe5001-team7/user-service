@@ -33,6 +33,8 @@ public class UserServiceApplication {
     }
 
     config.setIpAddress(ip);
+    config.setNonSecurePort(8080);
+    config.setNonSecurePortEnabled(true);
     config.setPreferIpAddress(true);
 
     return config;
