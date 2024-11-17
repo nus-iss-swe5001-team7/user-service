@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,11 +24,19 @@ public class AuthenticateService {
     @Autowired
     private UsersMapper usersMapper;
 
+    @Autowired
+    JwtTokenInterface jwtTokenInterface;
+
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
     public ResponseEntity<UserResponse> authenticate(UserRequest userRequest) {
         try {
             Users user = userRepository.findByEmail(userRequest.email());
-            if (user.getPassword().equals(userRequest.password())) {
-                return new ResponseEntity<>(usersMapper.formUserResponse(user), HttpStatus.OK);
+            if (encoder.matches(userRequest.password(), user.getPassword())) {
+                // Generate JWT token after successful login
+                String token = jwtTokenInterface.generateToken(user.getName()).getBody();
+                System.out.println("authenticate token:"+token);
+                return new ResponseEntity<>(usersMapper.formUserResponse(user, token), HttpStatus.OK);
             } else {
                 throw new AuthenticationException("Invalid email or password.");
             }
@@ -36,4 +45,6 @@ public class AuthenticateService {
             throw new UnAuthorizedException("Invalid login credentials");
         }
     }
+
+
 }
